@@ -63,7 +63,7 @@ export const TransactionProvider = ({ children }) => {
 
   // GET: Fetch all transactions
   useEffect(() => {
-    fetch("http://localhost:5000/transactions")
+    fetch("https://finance-tracker-b3-1.onrender.com/transactions")
       .then((res) => res.json())
       .then((data) => {
         setTransactions(data);
@@ -78,11 +78,14 @@ export const TransactionProvider = ({ children }) => {
   // POST: Add a new transaction
   const addTransaction = async (tx) => {
     try {
-      const res = await fetch("http://localhost:5000/transactions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(tx),
-      });
+      const res = await fetch(
+        "https://finance-tracker-b3-1.onrender.com/transactions",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(tx),
+        }
+      );
 
       const newTx = await res.json();
       setTransactions((prev) => [newTx, ...prev]);
@@ -94,9 +97,12 @@ export const TransactionProvider = ({ children }) => {
   // DELETE: Delete transaction by _id
   const deleteTransaction = async (_id) => {
     try {
-      await fetch(`http://localhost:5000/transactions/${_id}`, {
-        method: "DELETE",
-      });
+      await fetch(
+        `https://finance-tracker-b3-1.onrender.com/transactions/${_id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       setTransactions((prev) => prev.filter((t) => t._id !== _id));
     } catch (err) {
@@ -107,7 +113,7 @@ export const TransactionProvider = ({ children }) => {
   const editTransaction = async (_id, tx) => {
     try {
       const updatedTx = await fetch(
-        `http://localhost:5000/transactions/${_id}`,
+        `https://finance-tracker-b3-1.onrender.com/transactions/${_id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
